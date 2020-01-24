@@ -7,5 +7,5 @@
  */
 
 enum CellValue {
-EMPTY, X, O
+  EMPTY, X, O
 }
