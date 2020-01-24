@@ -8,47 +8,45 @@
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 public class TicTacToeGame {
-	CellValue[] board = ;
-
-
-   /**
-	* level records the number of rounds that have been
-	* played so far.
+	/**
+	*The access to following instance variables should be changed, 
+	*appropriate instance variables should become "private"
 	*/
-	level;
-
-   /**
+	/**
+	*The board of the game, stored as a one dimension array.
+	*/
+	public CellValue[] board;
+	/**
+	*level records the number of rounds that have been
+	*played so far. 
+	*/
+	public int level;
+	/**
 	* gameState records the current state of the game.
 	*/
-	gameState;
-
-
-   /**
+	public GameState gameState;
+	/**
 	* lines is the number of lines in the grid
 	*/
-	lines;
-
-   /**
+	public int lines;
+	/**
 	* columns is the number of columns in the grid
 	*/
-	columns;
-
-
-   /**
+	public int columns;
+	/**
 	* sizeWin is the number of cell of the same type
 	* that must be aligned to win the game
 	*/
-	sizeWin;
-
-
+	public int sizeWin;
+	
    /**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
 	*/
 	public TicTacToeGame(){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[3*3];
+		level = 0;
+		gameState = PLAYING; 
 	}
 
    /**
