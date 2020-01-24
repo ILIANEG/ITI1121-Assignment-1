@@ -4,6 +4,7 @@
  *  <b>XWIN</b> and <b>OWIN</b>
  *
  * @author Guy-Vincent Jourdan, University of Ottawa
+ *
  */
 
 enum GameState{
