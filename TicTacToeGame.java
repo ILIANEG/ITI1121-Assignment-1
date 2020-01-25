@@ -12,6 +12,7 @@ public class TicTacToeGame {
 	*The access to following instance variables should be changed, 
 	*appropriate instance variables should become "private"
 	*/
+	
 	/**
 	*The board of the game, stored as a one dimension array.
 	*/
@@ -39,17 +40,20 @@ public class TicTacToeGame {
 	*/
 	public int sizeWin;
 	
-   /**
+	/**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
 	*/
 	public TicTacToeGame(){
 		board = new CellValue[3*3];
 		level = 0;
-		gameState = PLAYING; 
+		gameState = PLAYING;
+		lines = 3;
+		columns = 3;
+		sizeWin = 3;
 	}
-
-   /**
+	
+	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game. 3 cells must
 	* be aligned.
@@ -59,12 +63,20 @@ public class TicTacToeGame {
     *  the number of columns in the game
   	*/
 	public TicTacToeGame(int lines, int columns){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[lines * columns];
+		level = 0;
+		gameState = PLAYING;
+		this.lines = lines;
+		this.columns = columns;
+		if(lines > columns){
+			sizeWin = columns;
+		}
+		else{
+			sizeWin = lines;
+		}
 	}
-
-   /**
+	
+	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game, as well as
 	* the number of cells that must be aligned to win.
@@ -76,33 +88,30 @@ public class TicTacToeGame {
     *  the number of cells that must be aligned to win.
   	*/
 	public TicTacToeGame(int lines, int columns, int sizeWin){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[lines * columns];
+		level = 0;
+		gameState = PLAYING;
+		this.lines = lines;
+		this.columns = columns;
+		this.sizeWin = sizeWin;
 	}
-
-
-
-   /**
+	
+	/**
 	* getter for the variable lines
 	* @return
-	* 	the value of lines
+	* the value of lines
 	*/
 	public int getLines(){
-
-		// YOUR CODE HERE
-
+		return lines
 	}
 
-   /**
+   	/**
 	* getter for the variable columns
 	* @return
-	* 	the value of columns
+	* the value of columns
 	*/
 	public int getColumns(){
-
-		// YOUR CODE HERE
-
+		return columns;
 	}
 
    /**
@@ -111,8 +120,7 @@ public class TicTacToeGame {
 	* 	the value of level
 	*/
 	public int getLevel(){
-
-		// YOUR CODE HERE
+		return level;
 
 	}
 
@@ -122,23 +130,19 @@ public class TicTacToeGame {
 	* 	the value of sizeWin
 	*/
 	public int getSizeWin(){
-
-		// YOUR CODE HERE
-
+		return sizeWin;
 	}
 
-   /**
+   	/**
 	* getter for the variable gameState
 	* @return
 	* 	the value of gameState
 	*/
 	public GameState getGameState(){
-
-		// YOUR CODE HERE
-
+		return gameState;
 	}
 
-   /**
+   	/**
 	* returns the cellValue that is expected next,
 	* in other word, which played (X or O) should
 	* play next.
@@ -149,12 +153,17 @@ public class TicTacToeGame {
     * to the next expected value.
   	*/
 	public CellValue nextCellValue(){
-
-		// YOUR CODE HERE
-
+		if(level % 2 == 0){
+			cellValue val = new cellValue.X
+			return val
+		}
+		else{
+			cellValue val = new cellValue.O
+			return val
+		}
 	}
 
-   /**
+   	/**
 	* returns the value  of the cell at
 	* index i.
 	* If the index is invalid, an error message is
