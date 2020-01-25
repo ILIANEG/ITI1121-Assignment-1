@@ -270,7 +270,7 @@ public class TicTacToeGame {
 	public String toString()
 	{// This will print the whole board (and message at end). It must be run once every round
 		String message, intermediate = "", boardgraphic = "", row = "";
-		char[] array = new char[columns * lines]{};
+		char[] array = new char[columns * lines];
 
 		//Determine length of intermediate line:
 		for (int i = 0; i < (4 * columns - 1); i++) {intermediate += "-";}
