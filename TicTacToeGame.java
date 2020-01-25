@@ -8,50 +8,52 @@
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 public class TicTacToeGame {
-	CellValue[] board = ;
-
-
-   /**
-	* level records the number of rounds that have been
-	* played so far.
+	/**
+	*The access to following instance variables should be changed, 
+	*appropriate instance variables should become "private"
 	*/
-	level;
-
-   /**
+	
+	/**
+	*The board of the game, stored as a one dimension array.
+	*/
+	public CellValue[] board;
+	/**
+	*level records the number of rounds that have been
+	*played so far. 
+	*/
+	public int level;
+	/**
 	* gameState records the current state of the game.
 	*/
-	gameState;
-
-
-   /**
+	public GameState gameState;
+	/**
 	* lines is the number of lines in the grid
 	*/
-	lines;
-
-   /**
+	public int lines;
+	/**
 	* columns is the number of columns in the grid
 	*/
-	columns;
-
-
-   /**
+	public int columns;
+	/**
 	* sizeWin is the number of cell of the same type
 	* that must be aligned to win the game
 	*/
-	sizeWin;
-
-
-   /**
+	public int sizeWin;
+	
+	/**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
 	*/
 	public TicTacToeGame(){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[3*3];
+		level = 0;
+		gameState = GameState.PLAYING;
+		lines = 3;
+		columns = 3;
+		sizeWin = 3;
 	}
-
-   /**
+	
+	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game. 3 cells must
 	* be aligned.
@@ -61,60 +63,64 @@ public class TicTacToeGame {
     *  the number of columns in the game
   	*/
 	public TicTacToeGame(int lines, int columns){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[lines * columns];
+		level = 0;
+		gameState = GameState.PLAYING;
+		this.lines = lines;
+		this.columns = columns;
+		if(lines > columns){
+			sizeWin = columns;
+		}
+		else{
+			sizeWin = lines;
+		}
 	}
-
-   /**
+	
+	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game, as well as
 	* the number of cells that must be aligned to win.
    	* @param lines
-    *  the number of lines in the game
-    * @param columns
-    *  the number of columns in the game
-    * @param sizeWin
-    *  the number of cells that must be aligned to win.
+    	*  the number of lines in the game
+    	* @param columns
+    	*  the number of columns in the game
+    	* @param sizeWin
+    	*  the number of cells that must be aligned to win.
   	*/
 	public TicTacToeGame(int lines, int columns, int sizeWin){
-
-		// YOUR CODE HERE
-
+		board = new CellValue[lines * columns];
+		level = 0;
+		gameState = GameState.PLAYING;
+		this.lines = lines;
+		this.columns = columns;
+		this.sizeWin = sizeWin;
 	}
-
-
-
-   /**
+	
+	/**
 	* getter for the variable lines
 	* @return
-	* 	the value of lines
+	* the value of lines
 	*/
 	public int getLines(){
-
-		// YOUR CODE HERE
-
+		return lines
 	}
 
-   /**
+   	/**
 	* getter for the variable columns
 	* @return
-	* 	the value of columns
+	* the value of columns
 	*/
 	public int getColumns(){
-
-		// YOUR CODE HERE
-
+		return columns;
 	}
 
-   /**
+   	/**
 	* getter for the variable level
 	* @return
 	* 	the value of level
 	*/
 	public int getLevel(){
-
-		// YOUR CODE HERE
+		return level;
 
 	}
 
@@ -124,55 +130,59 @@ public class TicTacToeGame {
 	* 	the value of sizeWin
 	*/
 	public int getSizeWin(){
-
-		// YOUR CODE HERE
-
+		return sizeWin;
 	}
 
-   /**
+   	/**
 	* getter for the variable gameState
 	* @return
 	* 	the value of gameState
 	*/
 	public GameState getGameState(){
-
-		// YOUR CODE HERE
-
+		return gameState;
 	}
 
-   /**
+   	/**
 	* returns the cellValue that is expected next,
 	* in other word, which played (X or O) should
 	* play next.
 	* This method does not modify the state of the
 	* game.
 	* @return
-    *  the value of the enum CellValue corresponding
-    * to the next expected value.
+    * the value of the enum CellValue corresponding
+   	* to the next expected value.
   	*/
 	public CellValue nextCellValue(){
-
-		// YOUR CODE HERE
-
+		if(level % 2 == 0){
+			cellValue val = new cellValue.X;
+			return val;
+		}
+		else{
+			cellValue val = new cellValue.O;
+			return val;
+		}
 	}
 
-   /**
+   	/**
 	* returns the value  of the cell at
 	* index i.
 	* If the index is invalid, an error message is
 	* printed out. The behaviour is then unspecified
    	* @param i
-    *  the index of the cell in the array board
+    * the index of the cell in the array board
     * @return
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-
-		// YOUR CODE HERE
-
+		if(i < board.length){
+			return board[i];
+		}
+		else{
+			System.out.println("Error message: index out of range");
+		}
 	}
 
-   /**
+   	/**
 	* This method is called when the next move has been
 	* decided by the next player. It receives the index
 	* of the cell to play as parameter.
@@ -186,20 +196,39 @@ public class TicTacToeGame {
 	* after a game is already won. If that is the case, the
 	* a message should be printed out and the move recorded.
 	* the  winner of the game is the player who won first
-   	* @param i
-    *  the index of the cell in the array board that has been
+   	* @par
+    * the index of the cell in the array board that has been
     * selected by the next player
   	*/
 	public void play(int i) {
-
-
-		// YOUR CODE HERE
-
-
+		if(i < board.length && board[i] == null && gameState != gameState.XWIN && gameState != gameState.OWIN){
+			switch(nextCellValue()){
+				case X:
+					board[i] = CellValue.X;
+				case O:
+					board[i] = CellValue.O;
+			}
+		}
+		else if(i >= board.length && board[i]){
+			System.out.println("Error message: index out of range")
+		}
+		else if(board[i] != null){
+			System.out.println("Error message: non-empty cell under specified index, choose another cell");
+		}
+		else if(gameState == gameState.XWIN || gameState == gameState.OWIN){
+			switch(gameState){
+				case XWIN:
+					board[i] = CellValue.X
+					System.out.println("Player X has won the game, however this turn has been recorded")
+				case OWIN:
+					board[i] = CellValue.O
+					System.out.println("Player O has won the game, however this turn has been recorded")
+			}
+		}
 	}
 
 
-   /**
+   	/**
 	* A helper method which updates the gameState variable
 	* correctly after the cell at index i was just set in
 	* the method play(int i)
@@ -212,8 +241,8 @@ public class TicTacToeGame {
 	* set the oucome correctly
 	*
    	* @param i
-    *  the index of the cell in the array board that has just
-    * been set
+    	*  the index of the cell in the array board that has just
+    	* been set
   	*/
 
 

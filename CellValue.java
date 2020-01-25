@@ -6,7 +6,6 @@
  * @author Guy-Vincent Jourdan, University of Ottawa
  */
 
-enum CellValue 
-{
-   EMPTY, X, O
+enum CellValue {
+  EMPTY, X, O
 }
