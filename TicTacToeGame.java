@@ -1,12 +1,12 @@
 /**
- * The class <b>TicTacToeGame</b> is the
- * class that implements the Tic Tac Toe Game.
- * It contains the grid and tracks its progress.
- * It automatically maintain the current state of
- * the game as players are making moves.
- *
- * @author Guy-Vincent Jourdan, University of Ottawa
- */
+* The class <b>TicTacToeGame</b> is the
+* class that implements the Tic Tac Toe Game.
+* It contains the grid and tracks its progress.
+* It automatically maintain the current state of
+* the game as players are making moves.
+*
+* @author Guy-Vincent Jourdan, University of Ottawa
+*/
 public class TicTacToeGame {
 	/**
 	*The access to following instance variables should be changed, 
@@ -81,11 +81,11 @@ public class TicTacToeGame {
 	* and the number of columns for the game, as well as
 	* the number of cells that must be aligned to win.
    	* @param lines
-    	*  the number of lines in the game
-    	* @param columns
-    	*  the number of columns in the game
-    	* @param sizeWin
-    	*  the number of cells that must be aligned to win.
+    *  the number of lines in the game
+    * @param columns
+    *  the number of columns in the game
+    * @param sizeWin
+    *  the number of cells that must be aligned to win.
   	*/
 	public TicTacToeGame(int lines, int columns, int sizeWin){
 		board = new CellValue[lines * columns];
