@@ -47,7 +47,7 @@ public class TicTacToeGame {
 	public TicTacToeGame(){
 		board = new CellValue[3*3];
 		level = 0;
-		gameState = PLAYING;
+		gameState = GameState.PLAYING;
 		lines = 3;
 		columns = 3;
 		sizeWin = 3;
@@ -58,14 +58,14 @@ public class TicTacToeGame {
 	* and the number of columns for the game. 3 cells must
 	* be aligned.
    	* @param lines
-    	*  the number of lines in the game
-    	* @param columns
-    	*  the number of columns in the game
+    *  the number of lines in the game
+    * @param columns
+    *  the number of columns in the game
   	*/
 	public TicTacToeGame(int lines, int columns){
 		board = new CellValue[lines * columns];
 		level = 0;
-		gameState = PLAYING;
+		gameState = GameState.PLAYING;
 		this.lines = lines;
 		this.columns = columns;
 		if(lines > columns){
@@ -90,7 +90,7 @@ public class TicTacToeGame {
 	public TicTacToeGame(int lines, int columns, int sizeWin){
 		board = new CellValue[lines * columns];
 		level = 0;
-		gameState = PLAYING;
+		gameState = GameState.PLAYING;
 		this.lines = lines;
 		this.columns = columns;
 		this.sizeWin = sizeWin;
@@ -149,7 +149,7 @@ public class TicTacToeGame {
 	* This method does not modify the state of the
 	* game.
 	* @return
-    	*  the value of the enum CellValue corresponding
+    * the value of the enum CellValue corresponding
    	* to the next expected value.
   	*/
 	public CellValue nextCellValue(){
@@ -169,12 +169,12 @@ public class TicTacToeGame {
 	* If the index is invalid, an error message is
 	* printed out. The behaviour is then unspecified
    	* @param i
-    	*  the index of the cell in the array board
-    	* @return
-    	*  the value at index i in the variable board.
+    * the index of the cell in the array board
+    * @return
+    *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-		if(board.length - 1 < i){
+		if(i < board.length){
 			return board[i];
 		}
 		else{
@@ -196,12 +196,35 @@ public class TicTacToeGame {
 	* after a game is already won. If that is the case, the
 	* a message should be printed out and the move recorded.
 	* the  winner of the game is the player who won first
-   	* @param i
-    	* the index of the cell in the array board that has been
-    	* selected by the next player
+   	* @par
+    * the index of the cell in the array board that has been
+    * selected by the next player
   	*/
 	public void play(int i) {
-		
+		if(i < board.length && board[i] == null && gameState != gameState.XWIN && gameState != gameState.OWIN){
+			switch(nextCellValue()){
+				case X:
+					board[i] = CellValue.X;
+				case O:
+					board[i] = CellValue.O;
+			}
+		}
+		else if(i >= board.length && board[i]){
+			System.out.println("Error message: index out of range")
+		}
+		else if(board[i] != null){
+			System.out.println("Error message: non-empty cell under specified index, choose another cell");
+		}
+		else if(gameState == gameState.XWIN || gameState == gameState.OWIN){
+			switch(gameState){
+				case XWIN:
+					board[i] = CellValue.X
+					System.out.println("Player X has won the game, however this turn has been recorded")
+				case OWIN:
+					board[i] = CellValue.O
+					System.out.println("Player O has won the game, however this turn has been recorded")
+			}
+		}
 	}
 
 
