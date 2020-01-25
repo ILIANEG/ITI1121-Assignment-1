@@ -154,12 +154,12 @@ public class TicTacToeGame {
   	*/
 	public CellValue nextCellValue(){
 		if(level % 2 == 0){
-			cellValue val = new cellValue.X
-			return val
+			cellValue val = new cellValue.X;
+			return val;
 		}
 		else{
-			cellValue val = new cellValue.O
-			return val
+			cellValue val = new cellValue.O;
+			return val;
 		}
 	}
 
@@ -174,9 +174,12 @@ public class TicTacToeGame {
     *  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
-
-		// YOUR CODE HERE
-
+		if(board.length - 1 < i){
+			return board[i];
+		}
+		else{
+			System.out.println("Error message: index out of range");
+		}
 	}
 
    /**
