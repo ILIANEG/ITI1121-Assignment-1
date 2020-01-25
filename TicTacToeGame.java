@@ -58,9 +58,9 @@ public class TicTacToeGame {
 	* and the number of columns for the game. 3 cells must
 	* be aligned.
    	* @param lines
-    *  the number of lines in the game
-    * @param columns
-    *  the number of columns in the game
+    	*  the number of lines in the game
+    	* @param columns
+    	*  the number of columns in the game
   	*/
 	public TicTacToeGame(int lines, int columns){
 		board = new CellValue[lines * columns];
@@ -81,11 +81,11 @@ public class TicTacToeGame {
 	* and the number of columns for the game, as well as
 	* the number of cells that must be aligned to win.
    	* @param lines
-    *  the number of lines in the game
-    * @param columns
-    *  the number of columns in the game
-    * @param sizeWin
-    *  the number of cells that must be aligned to win.
+    	*  the number of lines in the game
+    	* @param columns
+    	*  the number of columns in the game
+    	* @param sizeWin
+    	*  the number of cells that must be aligned to win.
   	*/
 	public TicTacToeGame(int lines, int columns, int sizeWin){
 		board = new CellValue[lines * columns];
@@ -114,7 +114,7 @@ public class TicTacToeGame {
 		return columns;
 	}
 
-   /**
+   	/**
 	* getter for the variable level
 	* @return
 	* 	the value of level
@@ -149,8 +149,8 @@ public class TicTacToeGame {
 	* This method does not modify the state of the
 	* game.
 	* @return
-    *  the value of the enum CellValue corresponding
-    * to the next expected value.
+    	*  the value of the enum CellValue corresponding
+   	* to the next expected value.
   	*/
 	public CellValue nextCellValue(){
 		if(level % 2 == 0){
@@ -169,9 +169,9 @@ public class TicTacToeGame {
 	* If the index is invalid, an error message is
 	* printed out. The behaviour is then unspecified
    	* @param i
-    *  the index of the cell in the array board
-    * @return
-    *  the value at index i in the variable board.
+    	*  the index of the cell in the array board
+    	* @return
+    	*  the value at index i in the variable board.
   	*/
 	public CellValue valueAt(int i) {
 		if(board.length - 1 < i){
@@ -182,7 +182,7 @@ public class TicTacToeGame {
 		}
 	}
 
-   /**
+   	/**
 	* This method is called when the next move has been
 	* decided by the next player. It receives the index
 	* of the cell to play as parameter.
@@ -197,19 +197,15 @@ public class TicTacToeGame {
 	* a message should be printed out and the move recorded.
 	* the  winner of the game is the player who won first
    	* @param i
-    *  the index of the cell in the array board that has been
-    * selected by the next player
+    	* the index of the cell in the array board that has been
+    	* selected by the next player
   	*/
 	public void play(int i) {
-
-
-		// YOUR CODE HERE
-
-
+		
 	}
 
 
-   /**
+   	/**
 	* A helper method which updates the gameState variable
 	* correctly after the cell at index i was just set in
 	* the method play(int i)
@@ -222,8 +218,8 @@ public class TicTacToeGame {
 	* set the oucome correctly
 	*
    	* @param i
-    *  the index of the cell in the array board that has just
-    * been set
+    	*  the index of the cell in the array board that has just
+    	* been set
   	*/
 
 
