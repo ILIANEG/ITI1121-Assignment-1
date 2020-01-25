@@ -44,6 +44,11 @@ public class TicTacToeGame {
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
 	*/
+	
+	
+	
+	
+	
 	public TicTacToeGame(){
 		board = new CellValue[3*3];
 		level = 0;
@@ -246,10 +251,9 @@ public class TicTacToeGame {
   	*/
 
 
-	private void setGameState(int i){
-
-		// YOUR CODE HERE
-
+	private void setGameState(int i)
+	{
+		
 	}
 
 
@@ -262,10 +266,39 @@ public class TicTacToeGame {
     *  String representation of the game
   	*/
 
-	public String toString(){
+	
+	public String toString()
+	{// This will print the whole board (and message at end). It must be run once every round
+		String message, intermediate = "", boardgraphic = "", row = "";
+		char[] array = new char[columns * lines]{};
 
-		// YOUR CODE HERE
+		//Determine length of intermediate line:
+		for (int i = 0; i < (4 * columns - 1); i++) {intermediate += "-";}
 
+		//Determine message
+		if (level % 2 == 1) {message = "O to play: ";}
+		else {message = "X to play: ";}
+
+		//Populate array
+		for (int i = 0; i < columns * lines; i++)
+		{
+			if (board[i] == X) {array[i] = ' ';}
+			else if (board[i] == O) {array[i] = 'O';}
+			else {array[i] = ' ';}
+		}
+
+		//Draw board:
+		for (int x = 0; x < lines; x++)
+		{
+			row = " " + array[x * columns];
+			for (int y = 1; y < columns; y++)
+			{
+				row += " | " + array[x * columns + y];
+			}
+			if (x != lines - 1) {boardgraphic += row + "\n" + intermediate + "\n";}
+			else {boardgraphic += row + "\n";}
+		}
+
+		return boardgraphic + "\n" + message;
 	}
-
 }
