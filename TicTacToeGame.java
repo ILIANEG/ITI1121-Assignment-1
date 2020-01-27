@@ -73,12 +73,7 @@ public class TicTacToeGame {
 		gameState = GameState.PLAYING;
 		this.lines = lines;
 		this.columns = columns;
-		if(lines > columns){
-			sizeWin = columns;
-		}
-		else{
-			sizeWin = lines;
-		}
+		sizeWin = 3;
 	}
 	
 	/**
