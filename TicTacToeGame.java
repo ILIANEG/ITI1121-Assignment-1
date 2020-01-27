@@ -201,7 +201,7 @@ public class TicTacToeGame {
     * selected by the next player
   	*/
 	public void play(int i) {
-		if(i < board.length && board[i] == null && gameState != gameState.XWIN && gameState != gameState.OWIN){
+		if(i < board.length && board[i] == gameState.EMPTY && gameState != gameState.XWIN && gameState != gameState.OWIN){
 			switch(nextCellValue()){
 				case X:
 					board[i] = CellValue.X;
@@ -209,10 +209,10 @@ public class TicTacToeGame {
 					board[i] = CellValue.O;
 			}
 		}
-		else if(i >= board.length && board[i]){
+		else if(i >= board.length){
 			System.out.println("Error message: index out of range")
 		}
-		else if(board[i] != null){
+		else if(board[i] != cellValue.EMPTY){
 			System.out.println("Error message: non-empty cell under specified index, choose another cell");
 		}
 		else if(gameState == gameState.XWIN || gameState == gameState.OWIN){
