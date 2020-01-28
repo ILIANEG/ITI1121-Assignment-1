@@ -277,8 +277,8 @@ public class TicTacToeGame {
 		//Populate array
 		for (int i = 0; i < columns * lines; i++)
 		{
-			if (board[i] == X) {array[i] = ' ';}
-			else if (board[i] == O) {array[i] = 'O';}
+			if (board[i] == CellValue.X) {array[i] = 'X';}
+			else if (board[i] == CellValue.O) {array[i] = 'O';}
 			else {array[i] = ' ';}
 		}
 
