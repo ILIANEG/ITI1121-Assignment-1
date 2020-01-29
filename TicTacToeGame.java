@@ -9,17 +9,17 @@
 */
 public class TicTacToeGame {
 	/**
-	*The access to following instance variables should be changed, 
+	*The access to following instance variables should be changed,
 	*appropriate instance variables should become "private"
 	*/
-	
+
 	/**
 	*The board of the game, stored as a one dimension array.
 	*/
 	public CellValue[] board;
 	/**
 	*level records the number of rounds that have been
-	*played so far. 
+	*played so far.
 	*/
 	public int level;
 	/**
@@ -39,16 +39,16 @@ public class TicTacToeGame {
 	* that must be aligned to win the game
 	*/
 	public int sizeWin;
-	
+
 	/**
 	* default constructor, for a game of 3x3, which must
 	* align 3 cells
 	*/
-	
-	
-	
-	
-	
+
+
+
+
+
 	public TicTacToeGame(){
 		board = new CellValue[3*3];
 		level = 0;
@@ -57,7 +57,7 @@ public class TicTacToeGame {
 		columns = 3;
 		sizeWin = 3;
 	}
-	
+
 	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game. 3 cells must
@@ -75,7 +75,7 @@ public class TicTacToeGame {
 		this.columns = columns;
 		sizeWin = 3;
 	}
-	
+
 	/**
 	* constructor allowing to specify the number of lines
 	* and the number of columns for the game, as well as
@@ -95,14 +95,14 @@ public class TicTacToeGame {
 		this.columns = columns;
 		this.sizeWin = sizeWin;
 	}
-	
+
 	/**
 	* getter for the variable lines
 	* @return
 	* the value of lines
 	*/
 	public int getLines(){
-		return lines
+		return lines;
 	}
 
    	/**
@@ -154,11 +154,11 @@ public class TicTacToeGame {
   	*/
 	public CellValue nextCellValue(){
 		if(level % 2 == 0){
-			cellValue val = new cellValue.X;
+			CellValue val = CellValue.X;
 			return val;
 		}
 		else{
-			cellValue val = new cellValue.O;
+			CellValue val = CellValue.O;
 			return val;
 		}
 	}
@@ -180,6 +180,7 @@ public class TicTacToeGame {
 		else{
 			System.out.println("Error message: index out of range");
 		}
+		return CellValue.EMPTY;
 	}
 
    	/**
@@ -201,7 +202,7 @@ public class TicTacToeGame {
     * selected by the next player
   	*/
 	public void play(int i) {
-		if(i < board.length && board[i] == gameState.EMPTY && gameState != gameState.XWIN && gameState != gameState.OWIN){
+		if(i < board.length && board[i] == CellValue.EMPTY && gameState != GameState.XWIN && gameState != GameState.OWIN){
 			switch(nextCellValue()){
 				case X:
 					board[i] = CellValue.X;
@@ -210,19 +211,19 @@ public class TicTacToeGame {
 			}
 		}
 		else if(i >= board.length){
-			System.out.println("Error message: index out of range")
+			System.out.println("Error message: index out of range");
 		}
-		else if(board[i] != cellValue.EMPTY){
+		else if(board[i] != CellValue.EMPTY){
 			System.out.println("Error message: non-empty cell under specified index, choose another cell");
 		}
-		else if(gameState == gameState.XWIN || gameState == gameState.OWIN){
+		else if(gameState == GameState.XWIN || gameState == GameState.OWIN){
 			switch(gameState){
 				case XWIN:
-					board[i] = CellValue.X
-					System.out.println("Player X has won the game, however this turn has been recorded")
+					board[i] = CellValue.X;
+					System.out.println("Player X has won the game, however this turn has been recorded");
 				case OWIN:
-					board[i] = CellValue.O
-					System.out.println("Player O has won the game, however this turn has been recorded")
+					board[i] = CellValue.O;
+					System.out.println("Player O has won the game, however this turn has been recorded");
 			}
 		}
 	}
@@ -246,9 +247,40 @@ public class TicTacToeGame {
   	*/
 
 
-	private void setGameState(int i)
-	{
-		
+	private void setGameState(int i){
+		for(int a = 0; a < board.length && gameState == GameState.PLAYING; a++){
+			for(int b = 0; b < 2 && gameState == GameState.PLAYING; b++){
+				int inc = columns + b;
+				int counter = 1;
+				for(int c = 0; c / inc < (lines - 1) && gameState == GameState.PLAYING; c = c + inc){
+					if(board[c] == board[c + inc]){
+						counter++;
+					}
+					else{
+						counter = 1;
+					}
+					if(counter == sizeWin && board[c] != CellValue.EMPTY){
+						if(board[c] == CellValue.X){
+							gameState = GameState.XWIN;
+						}
+						else{
+							gameState = GameState.OWIN;
+						}
+					}
+				}
+			}
+		}
+		boolean emptyCell = false;
+		for(int l = 0; l / columns < lines && emptyCell == false; l = l + columns){
+			for(int c = 0; c < columns && emptyCell == false; c++){
+				if(board[l + c] == CellValue.EMPTY){
+					emptyCell = true;
+				}
+			}
+		}
+		if(emptyCell == false){
+			gameState = GameState.DRAWN;
+		}
 	}
 
 
@@ -261,7 +293,7 @@ public class TicTacToeGame {
     *  String representation of the game
   	*/
 
-	
+
 	public String toString()
 	{// This will print the whole board (and message at end). It must be run once every round
 		String message, intermediate = "", boardgraphic = "", row = "";
