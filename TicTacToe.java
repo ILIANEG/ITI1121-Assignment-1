@@ -4,7 +4,7 @@ import java.io.Console;
 public class TicTacToe{
 
    /**
-     * <b>main</b> of the application. Creates the instance of  TicTacToeGame 
+     * <b>main</b> of the application. Creates the instance of  TicTacToeGame
      * and starts the game. If two parameters lines  and columns
      * are passed, they are used. If the paramters lines, columns
      * and win are passed, they are used.
@@ -44,16 +44,18 @@ public class TicTacToe{
                 System.out.println("Invalid argument, using default...");
                 win = 3;
             }
-        } 
+        }
         if (args.length > 3){
             System.out.println("Too many arguments. Only the first 3 are used.");
-        } 
-        
+        }
+
         game = new TicTacToeGame(lines, columns,win);
-
-
-        // YOUR CODE HERE
-
+        while(true){
+          game.toString();
+          String in = System.console().readLine();
+          Integer input = Integer.valueOf(in);
+          game.play(input);
+        }
 
     }
 
