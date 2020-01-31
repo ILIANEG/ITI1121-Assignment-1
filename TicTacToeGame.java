@@ -328,4 +328,34 @@ public class TicTacToeGame {
 
 		return boardgraphic + "\n" + message;
 	}
+	
+	private void checkWin (CellValue[] in)
+	{
+		int X = 0;
+		int O = 0;
+		for (int i = 0; in.length - 1; i++)
+		{
+			//Check if X won:
+			if (in[i] == CellValue.X && in[i] == in[i++])
+			{
+				X++;
+				if (X >= sizeWin)
+				{
+					gameState = GameState.XWIN;
+					return;
+				}
+			}
+			else {X = 0}
+
+			//Check if O won:
+			if (in[i] == CellValue.O && in[i] == in[i++])
+			{
+				O++;
+				if (O >= sizeWin) {gameState = GameState.OWIN;}
+			}
+			else {O = 0}
+		}
+		gameState = GameState.PLAYING;
+		return;
+	}
 }
