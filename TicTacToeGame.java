@@ -246,44 +246,71 @@ public class TicTacToeGame {
     	* been set
   	*/
 
-
 	private void setGameState(int i){
-		for(int a = 0; a < board.length && gameState == GameState.PLAYING; a++){
-			for(int b = 0; b < 2 && gameState == GameState.PLAYING; b++){
-				int inc = columns + b;
-				int counter = 1;
-				for(int c = 0; c / inc < (lines - 1) && gameState == GameState.PLAYING; c = c + inc){
-					if(board[c] == board[c + inc]){
-						counter++;
-					}
-					else{
-						counter = 1;
-					}
-					if(counter == sizeWin && board[c] != CellValue.EMPTY){
-						if(board[c] == CellValue.X){
-							gameState = GameState.XWIN;
-						}
-						else{
-							gameState = GameState.OWIN;
-						}
-					}
-				}
+		i--;
+		int columnIndex = (i) % columns;
+		int rowIndex = (i) / columns * columns;
+		boolean leftDiagFound = false;
+		boolean rightDiagFound = false;
+		int diagLeftIndex = i;
+		int diagRightIndex = i;
+		while(! leftDiagFound){
+			if(diagLeftIndex - columns - 1 >= diagLeftIndex / columns * columns - columns){
+				diagLeftIndex = diagLeftIndex - columns - 1;
+			}else{
+				leftDiagFound = false;
 			}
 		}
-		boolean emptyCell = false;
-		for(int l = 0; l / columns < lines && emptyCell == false; l = l + columns){
-			for(int c = 0; c < columns && emptyCell == false; c++){
-				if(board[l + c] == CellValue.EMPTY){
-					emptyCell = true;
-				}
+		while(! rightDiagFound){
+			if(diagRightIndex - columns + 1 < diagRightIndex / columns * columns){
+				diagRightIndex = diagRightIndex - columns + 1;
+			}else{
+				leftDiagFound = false;
 			}
 		}
-		if(emptyCell == false){
-			gameState = GameState.DRAWN;
+		// Initialising column diagonal and line array
+		CellValue[] column = new CellValue[lines];
+		CellValue[] leftDiagonal = new CellValue[lines];
+		CellValue[] rightDiagonal = new CellValue[lines];
+		CellValue[] line = new CellValue[columns];
+		int indexCount = 0;
+		//loop will populate array column, which will recieve column where i located
+		for(int a = columnIndex; a < board.length; a = a + columns){
+			column[indexCount] = board[a];
+			indexCount++;
+		}
+		indexCount = 0;
+		//loop will populate array line, which will recieve line in which i located
+		for(int a = rowIndex; a < rowIndex + 4; a++){
+			line[indexCount] = board[a];
+			indexCount++;
+		}
+		indexCount = 0;
+		//loop will populate Left diagonal
+		for(int a = diagLeftIndex; a < lines * columns; a = a + columns + 1){
+			leftDiagonal[indexCount] = board[a];
+			indexCount++;
+		}
+		indexCount = 0;
+		//loop will populate Right leftDiagonal
+		for(int a = diagLeftIndex; a < lines * columns; a = a + columns - 1){
+			rightDiagonal[indexCount] = board[a];
+			indexCount++;
+		}
+		if(gameState == GameState.PLAYING){
+			boolean empty = false;
+			int index = 0;
+			while(! empty){
+				if(board[index] == CellValue.EMPTY){
+					empty = true;
+				}
+				index++;
+			}
+			if(empty){
+				gameState = GameState.DRAWN
+			}
 		}
 	}
-
-
 
    /**
 	* Returns a String representation of the game matching
@@ -345,7 +372,7 @@ public class TicTacToeGame {
 					return;
 				}
 			}
-			else {X = 0}
+			else {X = 0;}
 
 			//Check if O won:
 			if (in[i] == CellValue.O && in[i] == in[i++])
@@ -353,7 +380,7 @@ public class TicTacToeGame {
 				O++;
 				if (O >= sizeWin) {gameState = GameState.OWIN;}
 			}
-			else {O = 0}
+			else {O = 0;}
 		}
 		gameState = GameState.PLAYING;
 		return;
