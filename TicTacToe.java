@@ -48,15 +48,11 @@ public class TicTacToe{
         if (args.length > 3){
             System.out.println("Too many arguments. Only the first 3 are used.");
         }
-
-        game = new TicTacToeGame(lines, columns,win);
-        while(true){
-          game.toString();
-          String in = System.console().readLine();
-          Integer input = Integer.valueOf(in);
-          game.play(input);
-        }
-
+        game = new TicTacToeGame();
+        System.out.println("line 52");
+        game.play(1);
+        System.out.println("line 53");
+        game.toString();
+        System.out.println("line 55");
     }
-
 }
