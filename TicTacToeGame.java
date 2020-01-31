@@ -50,7 +50,7 @@ public class TicTacToeGame {
 
 
 	public TicTacToeGame(){
-		board = new CellValue[3*3];
+		board = new CellValue[3 * 3];
 		for(int a = 0; a < board.length; a++){
 			board[a] = CellValue.EMPTY;
 		}
@@ -214,11 +214,11 @@ public class TicTacToeGame {
 		i--;
 		if(i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING){
 			System.out.println(nextCellValue().name());
-			switch(nextCellValue()){
-				case X:
-					board[i] = CellValue.X;
-					setGameState(i);
-				case O:
+			if(nextCellValue() == CellValue.X){
+				board[i] = CellValue.X;
+				setGameState(i);
+			}
+			if(nextCellValue() == CellValue.O){
 					board[i] = CellValue.O;
 					setGameState(i);
 			}
@@ -230,14 +230,16 @@ public class TicTacToeGame {
 			System.out.println("Error message: non-empty cell under specified index, choose another cell");
 		}
 		else if(gameState == GameState.XWIN || gameState == GameState.OWIN){
-			switch(gameState){
-				case XWIN:
-					board[i] = CellValue.X;
-					System.out.println("Player X has won the game, however this turn has been recorded");
-				case OWIN:
-					board[i] = CellValue.O;
-					System.out.println("Player O has won the game, however this turn has been recorded");
+			if(nextCellValue() == CellValue.X){
+				board[i] = CellValue.X;
+				System.out.println("Player X has won the game, however this turn has been recorded");
 			}
+			if(nextCellValue() == CellValue.O){
+				board[i] = CellValue.O;
+				System.out.println("Player O has won the game, however this turn has been recorded");
+			}
+		}else{
+			System.out.println("Invalid input");
 		}
 		level++;
 		System.out.println(gameState.name());
@@ -319,15 +321,15 @@ public class TicTacToeGame {
 		}
 		//Loop checks if the game was DRAWN
 		if(gameState == GameState.PLAYING){
-			boolean empty = false;
+			boolean drawn = true;
 			int index = 0;
 			while(! empty){
 				if(board[index] == CellValue.EMPTY){
-					empty = true;
+					empty = false;
 				}
 				index++;
 			}
-			if(empty){
+			if(! drawn){
 				gameState = GameState.DRAWN;
 			}
 		}
