@@ -49,10 +49,12 @@ public class TicTacToe{
             System.out.println("Too many arguments. Only the first 3 are used.");
         }
         game = new TicTacToeGame();
-        System.out.println("line 52");
-        game.play(1);
-        System.out.println("line 53");
-        game.toString();
-        System.out.println("line 55");
+        while(true){
+          System.out.println(game.toString());
+          console = System.console();
+          String input = console.readLine();
+          int i = Integer.parseInt(input);
+          game.play(i);
+        }
     }
 }
