@@ -48,7 +48,7 @@ public class TicTacToe{
         if (args.length > 3){
             System.out.println("Too many arguments. Only the first 3 are used.");
         }
-        game = new TicTacToeGame();
+        game = new TicTacToeGame(lines, columns, win);
         while(true){
           System.out.println(game.toString());
           console = System.console();

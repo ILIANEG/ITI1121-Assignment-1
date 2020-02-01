@@ -213,7 +213,7 @@ public class TicTacToeGame {
   	*/
 	public void play(int i) {
 		i--;
-		if(i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING){
+		if(i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING && i > -1){
 			if(nextCellValue() == CellValue.X){
 				board[i] = CellValue.X;
 				setGameState(i);
@@ -225,7 +225,7 @@ public class TicTacToeGame {
 					level++;
 			}
 		}
-		else if(i >= board.length){
+		else if(i >= board.length || i < 0){
 			System.out.println("Error message: index out of range");
 		}
 		else if(board[i] != CellValue.EMPTY){
@@ -246,8 +246,8 @@ public class TicTacToeGame {
 		else if(gameState == GameState.DRAWN){
 			System.out.println("Game drawn");
 		}
-		System.out.println(Arrays.toString(board));
-		System.out.println(gameState.toString());
+//		System.out.println(Arrays.toString(board));
+//		System.out.println(gameState.toString());
 	}
 
 
@@ -328,10 +328,10 @@ public class TicTacToeGame {
 		}*/
 		CellValue[][] toCheck = {column, line};
 		//Loop checks for winner if any
-		System.out.println(Arrays.toString(column));
-		System.out.println(Arrays.toString(line));
+//		System.out.println(Arrays.toString(column));
+//		System.out.println(Arrays.toString(line));
 		for(int a = 0; a < toCheck.length && gameState == GameState.PLAYING; a++){
-			System.out.println(a);
+//			System.out.println(a);
 			checkWin(toCheck[a]);
 		}
 		//Loop checks if the game was DRAWN
