@@ -247,7 +247,7 @@ public class TicTacToeGame {
 			System.out.println("Game drawn");
 		}
 //		System.out.println(Arrays.toString(board));
-//		System.out.println(gameState.toString());
+	System.out.println(gameState.toString());
 	}
 
 
@@ -271,67 +271,60 @@ public class TicTacToeGame {
 	private void setGameState(int i){
 		int columnIndex = (i) % columns;
 		int rowIndex = (i) / columns * columns;
-		//boolean leftDiagFound = false;
-		//boolean rightDiagFound = false;
-		//int diagLeftIndex = i;
-		//int diagRightIndex = i;
-		/*if(columns < i){
-			while(! leftDiagFound){
-				if(diagLeftIndex - columns - 1 >= diagLeftIndex / columns * columns - columns){
-					diagLeftIndex = diagLeftIndex - columns - 1;
-				}else{
-					leftDiagFound = true;
-				}
-			}
-			while(! rightDiagFound){
-				if(diagRightIndex - columns + 1 < diagRightIndex / columns * columns){
-					diagRightIndex = diagRightIndex - columns + 1;
-				}else{
-					leftDiagFound = true;
-				}
-			}
-		}else
-		{
-			diagLeftIndex = 0;
-			diagRightIndex = 0;
-		}*/
+		int[] diagonalLeftIndex = {i / columns, i % columns};
+		int[] diagonalRightIndex = {i / columns, i % columns};
+
+		diagonalLeftIndex = findOrigin(diagonalLeftIndex, 'l');
+		diagonalRightIndex = findOrigin(diagonalRightIndex, 'r');
+
 		// Initialising column diagonal and line array
-		CellValue[] column = new CellValue[lines];
+		CellValue[] vertical = new CellValue[lines];
 		CellValue[] leftDiagonal = new CellValue[lines];
 		CellValue[] rightDiagonal = new CellValue[lines];
-		CellValue[] line = new CellValue[columns];
+		CellValue[] horizontal = new CellValue[columns];
 		int indexCount = 0;
 		//loop will populate array column, which will recieve column where i located
 		for(int a = columnIndex; a < board.length; a = a + columns){
-			column[indexCount] = board[a];
+			vertical[indexCount] = board[a];
 			indexCount++;
 		}
 		indexCount = 0;
 		//loop will populate array line, which will recieve line in which i located
 		for(int a = rowIndex; a < rowIndex + 3; a++){
-			line[indexCount] = board[a];
+			horizontal[indexCount] = board[a];
 			indexCount++;
 		}
+
+		//Populate array of diagonal to the left if it was found
 		indexCount = 0;
-		/*//loop will populate Left diagonal
-		for(int a = diagLeftIndex; a < lines * columns; a = a + columns + 1){
-			leftDiagonal[indexCount] = board[a];
+		int row = diagonalLeftIndex[0];
+		int col = diagonalLeftIndex[1];
+		while(row < lines && col < columns )
+		{
+			leftDiagonal[indexCount] = board[row * columns + col];
+			row++;
+			col++;
 			indexCount++;
 		}
+
+		//Populate array of diagonal to the right if it was found
 		indexCount = 0;
-		//loop will populate Right leftDiagonal
-		for(int a = diagLeftIndex; a < lines * columns; a = a + columns - 1){
-			System.out.println(board[a]);
-			System.out.println(a);
-			rightDiagonal[indexCount] = board[a];
+		row = diagonalRightIndex[0];
+		col = diagonalRightIndex[1];
+		while(row < lines && 0 <= col)
+		{
+			rightDiagonal[indexCount] = board[row * columns + col];
+			row++;
+			col--;
 			indexCount++;
-		}*/
-		CellValue[][] toCheck = {column, line};
+		}
+
+		System.out.println(Arrays.toString(leftDiagonal));
+		System.out.println(Arrays.toString(rightDiagonal));
+
+		CellValue[][] toCheck = {vertical, horizontal, leftDiagonal, rightDiagonal};
 		//Loop checks for winner if any
-//		System.out.println(Arrays.toString(column));
-//		System.out.println(Arrays.toString(line));
 		for(int a = 0; a < toCheck.length && gameState == GameState.PLAYING; a++){
-//			System.out.println(a);
 			checkWin(toCheck[a]);
 		}
 		//Loop checks if the game was DRAWN
@@ -393,54 +386,76 @@ public class TicTacToeGame {
 
 		return boardgraphic + "\n" + message;
 	}
-
-	/*private void checkWin (CellValue[] in)
+	//Function checks if there is a winner in array of CellValues
+	private void checkWin (CellValue[] in)
 	{
-		int X = 0;
-		int O = 0;
-		for (int i = 0; i < in.length - 1; i++)
+		int winCount = 0;
+		for(int i = 0; i < in.length - 1; i++)
 		{
-			//Check if X won:
-			if (in[i] == CellValue.X && in[i] == in[i++])
+			if(in[i] == in[i + 1] && in[i] != CellValue.EMPTY && in[i] != null)
 			{
-				X++;
-				if (X >= sizeWin)
+				winCount++;
+			}
+			if(winCount == sizeWin - 1)
+			{
+				if(in[i] == CellValue.X)
 				{
 					gameState = GameState.XWIN;
-					System.out.println("X wins");
-					return;
+				}
+				else
+				{
+					gameState = GameState.OWIN;
 				}
 			}
-			else {X = 0;}
-
-			//Check if O won:
-			if (in[i] == CellValue.O && in[i] == in[i++])
+		}
+	}
+	//function finds origin of diagonal or where the first point of diagonal is
+	private int[] findOrigin(int[] rc, char lr)
+	{
+		if(lr == 'l')
+		{
+			int[] lrc = rc;
+			while(true)
 			{
-				O++;
-				if (O >= sizeWin) {gameState = GameState.OWIN;
-				System.out.println("O wins");}
-			}
-			else {O = 0;}
-		}
-		gameState = GameState.PLAYING;
-		return;
-	}
-}*/
-private void checkWin (CellValue[] in)
-{
-	int winCount = 0;
-	for(int i = 0; i < in.length - 1; i++){
-		if(in[i] == in[i + 1]){
-			winCount++;
-		}
-		if(winCount == sizeWin - 1){
-			if(in[i] == CellValue.X){
-				gameState = GameState.XWIN;
-			}
-			else{
-				gameState = GameState.OWIN;
+				if((lrc[0] == 0 && lrc[1] == columns - 1) && (lrc[0] == lines - 1 && lrc[1] == 0))
+				{
+					lrc[0] = 0;
+					lrc[1] = 0;
+					return lrc;
+				}
+				else if(lrc[0] == 0 || lrc[1] == 0)
+				{
+					return lrc;
+				}
+				else
+				{
+					lrc[0] = rc[0] - 1;
+					lrc[1] = rc[1] - 1;
+				}
 			}
 		}
-	}
+		if(lr == 'r')
+		{
+			int[] rrc = rc;
+			while(true)
+			{
+				if((rrc[0] == 0 && rrc[1] == 0) || (rrc[0] == lines - 1 && rrc[1] == columns - 1))
+				{
+					rrc[0] = 0;
+					rrc[1] = columns - 1;
+					return rrc;
+				}
+				else if(rrc[0] == 0 || rrc[1] == columns - 1)
+				{
+					return rrc;
+				}
+				else
+				{
+					rrc[0] = rrc[0] - 1;
+					rrc[1] = rrc[1] + 1;
+				}
+			}
+		}
+		return rc;
 	}
 }
