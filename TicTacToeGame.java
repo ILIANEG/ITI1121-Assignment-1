@@ -7,6 +7,7 @@
 *
 * @author Guy-Vincent Jourdan, University of Ottawa
 */
+import java.util.Arrays;
 public class TicTacToeGame {
 	/**
 	*The access to following instance variables should be changed,
@@ -50,7 +51,7 @@ public class TicTacToeGame {
 
 
 	public TicTacToeGame(){
-		board = new CellValue[3 * 3];
+		board = new CellValue[3*3];
 		for(int a = 0; a < board.length; a++){
 			board[a] = CellValue.EMPTY;
 		}
@@ -213,14 +214,15 @@ public class TicTacToeGame {
 	public void play(int i) {
 		i--;
 		if(i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING){
-			System.out.println(nextCellValue().name());
 			if(nextCellValue() == CellValue.X){
 				board[i] = CellValue.X;
 				setGameState(i);
+				level++;
 			}
-			if(nextCellValue() == CellValue.O){
+			else if(nextCellValue() == CellValue.O){
 					board[i] = CellValue.O;
 					setGameState(i);
+					level++;
 			}
 		}
 		else if(i >= board.length){
@@ -232,17 +234,20 @@ public class TicTacToeGame {
 		else if(gameState == GameState.XWIN || gameState == GameState.OWIN){
 			if(nextCellValue() == CellValue.X){
 				board[i] = CellValue.X;
-				System.out.println("Player X has won the game, however this turn has been recorded");
+				System.out.println("Player X won the game, however the play was recorded");
+				level++;
 			}
-			if(nextCellValue() == CellValue.O){
+			else if(nextCellValue() == CellValue.O){
 				board[i] = CellValue.O;
-				System.out.println("Player O has won the game, however this turn has been recorded");
+				System.out.println("Player X won the game, however the play was recorded");
+				level++;
 			}
-		}else{
-			System.out.println("Invalid input");
 		}
-		level++;
-		System.out.println(gameState.name());
+		else if(gameState == GameState.DRAWN){
+			System.out.println("Game drawn");
+		}
+		System.out.println(Arrays.toString(board));
+		System.out.println(gameState.toString());
 	}
 
 
@@ -264,27 +269,32 @@ public class TicTacToeGame {
   	*/
 
 	private void setGameState(int i){
-		i--;
 		int columnIndex = (i) % columns;
 		int rowIndex = (i) / columns * columns;
-		boolean leftDiagFound = false;
-		boolean rightDiagFound = false;
-		int diagLeftIndex = i;
-		int diagRightIndex = i;
-		while(! leftDiagFound){
-			if(diagLeftIndex - columns - 1 >= diagLeftIndex / columns * columns - columns){
-				diagLeftIndex = diagLeftIndex - columns - 1;
-			}else{
-				leftDiagFound = false;
+		//boolean leftDiagFound = false;
+		//boolean rightDiagFound = false;
+		//int diagLeftIndex = i;
+		//int diagRightIndex = i;
+		/*if(columns < i){
+			while(! leftDiagFound){
+				if(diagLeftIndex - columns - 1 >= diagLeftIndex / columns * columns - columns){
+					diagLeftIndex = diagLeftIndex - columns - 1;
+				}else{
+					leftDiagFound = true;
+				}
 			}
-		}
-		while(! rightDiagFound){
-			if(diagRightIndex - columns + 1 < diagRightIndex / columns * columns){
-				diagRightIndex = diagRightIndex - columns + 1;
-			}else{
-				leftDiagFound = false;
+			while(! rightDiagFound){
+				if(diagRightIndex - columns + 1 < diagRightIndex / columns * columns){
+					diagRightIndex = diagRightIndex - columns + 1;
+				}else{
+					leftDiagFound = true;
+				}
 			}
-		}
+		}else
+		{
+			diagLeftIndex = 0;
+			diagRightIndex = 0;
+		}*/
 		// Initialising column diagonal and line array
 		CellValue[] column = new CellValue[lines];
 		CellValue[] leftDiagonal = new CellValue[lines];
@@ -298,12 +308,12 @@ public class TicTacToeGame {
 		}
 		indexCount = 0;
 		//loop will populate array line, which will recieve line in which i located
-		for(int a = rowIndex; a < rowIndex + 4; a++){
+		for(int a = rowIndex; a < rowIndex + 3; a++){
 			line[indexCount] = board[a];
 			indexCount++;
 		}
 		indexCount = 0;
-		//loop will populate Left diagonal
+		/*//loop will populate Left diagonal
 		for(int a = diagLeftIndex; a < lines * columns; a = a + columns + 1){
 			leftDiagonal[indexCount] = board[a];
 			indexCount++;
@@ -311,25 +321,30 @@ public class TicTacToeGame {
 		indexCount = 0;
 		//loop will populate Right leftDiagonal
 		for(int a = diagLeftIndex; a < lines * columns; a = a + columns - 1){
+			System.out.println(board[a]);
+			System.out.println(a);
 			rightDiagonal[indexCount] = board[a];
 			indexCount++;
-		}
-		CellValue[][] toCheck = {column, line, leftDiagonal, rightDiagonal};
+		}*/
+		CellValue[][] toCheck = {column, line};
 		//Loop checks for winner if any
+		System.out.println(Arrays.toString(column));
+		System.out.println(Arrays.toString(line));
 		for(int a = 0; a < toCheck.length && gameState == GameState.PLAYING; a++){
+			System.out.println(a);
 			checkWin(toCheck[a]);
 		}
 		//Loop checks if the game was DRAWN
 		if(gameState == GameState.PLAYING){
 			boolean drawn = true;
 			int index = 0;
-			while(! empty){
+			while(drawn && index < board.length){
 				if(board[index] == CellValue.EMPTY){
-					empty = false;
+					drawn = false;
 				}
 				index++;
 			}
-			if(! drawn){
+			if(drawn){
 				gameState = GameState.DRAWN;
 			}
 		}
@@ -379,7 +394,7 @@ public class TicTacToeGame {
 		return boardgraphic + "\n" + message;
 	}
 
-	private void checkWin (CellValue[] in)
+	/*private void checkWin (CellValue[] in)
 	{
 		int X = 0;
 		int O = 0;
@@ -403,11 +418,29 @@ public class TicTacToeGame {
 			{
 				O++;
 				if (O >= sizeWin) {gameState = GameState.OWIN;
-				System.out.println("X wins");}
+				System.out.println("O wins");}
 			}
 			else {O = 0;}
 		}
 		gameState = GameState.PLAYING;
 		return;
+	}
+}*/
+private void checkWin (CellValue[] in)
+{
+	int winCount = 0;
+	for(int i = 0; i < in.length - 1; i++){
+		if(in[i] == in[i + 1]){
+			winCount++;
+		}
+		if(winCount == sizeWin - 1){
+			if(in[i] == CellValue.X){
+				gameState = GameState.XWIN;
+			}
+			else{
+				gameState = GameState.OWIN;
+			}
+		}
+	}
 	}
 }
