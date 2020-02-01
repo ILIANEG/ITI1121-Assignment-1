@@ -212,7 +212,7 @@ public class TicTacToeGame {
     * selected by the next player
   	*/
 	public void play(int i) {
-		i--;
+//		i--;
 		if(i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING && i > -1){
 			if(nextCellValue() == CellValue.X){
 				board[i] = CellValue.X;
