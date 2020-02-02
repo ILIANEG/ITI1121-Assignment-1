@@ -416,7 +416,7 @@ public class TicTacToeGame {
 			int[] lrc = rc;
 			while(true)
 			{
-				if((lrc[0] == 0 && lrc[1] == columns - 1) && (lrc[0] == lines - 1 && lrc[1] == 0))
+				if((lrc[0] == 0 && lrc[1] == columns - 1) || (lrc[0] == lines - 1 && lrc[1] == 0))
 				{
 					lrc[0] = 0;
 					lrc[1] = 0;
