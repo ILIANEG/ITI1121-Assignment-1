@@ -42,13 +42,16 @@ public class TicTacToe
 
 		//Initialize game:
 		game = new TicTacToeGame(lines, columns, win);
-		while (true)
+		//Game will contiunue until the game will not be drawn
+		while (game.getGameState() == GameState.PLAYING)
 		{
-			System.out.println(game.toString());
+			System.out.print(game.toString());
 			console = System.console();
 			String input = console.readLine();
+			//offsetting the input;
 			int i = Integer.parseInt(input) - 1;
 			game.play(i);
 		}
+		System.out.println(game.toString());
 	}
 }

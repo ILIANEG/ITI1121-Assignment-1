@@ -3,12 +3,12 @@
 import java.util.Arrays;
 public class TicTacToeGame
 {
-	public CellValue[] board;//Stores the game board
-	public int level;//Stores the number of rounds played
-	public GameState gameState;//Stores the current gamestate
-	public int lines;//Stores the number of rows
-	public int columns;//Stores the number of columns
-	public int sizeWin;//Stores the amount of matching values required to win
+	private CellValue[] board;//Stores the game board
+	private int level;//Stores the number of rounds played
+	private GameState gameState;//Stores the current gamestate
+	private int lines;//Stores the number of rows
+	private int columns;//Stores the number of columns
+	private int sizeWin;//Stores the amount of matching values required to win
 
 	//Default constructor:
 	public TicTacToeGame()
@@ -70,7 +70,6 @@ public class TicTacToeGame
 	//Handles each move:
 	public void play(int i)
 	{
-		if (i == )
 		if (i >= board.length || i <= -1) {System.out.println("Error message: index out of range");}
 		else if (i < board.length && board[i] == CellValue.EMPTY && gameState == GameState.PLAYING)
 		{
@@ -93,17 +92,17 @@ public class TicTacToeGame
 			if (nextCellValue() == CellValue.X)
 			{
 				board[i] = CellValue.X;
-				System.out.println("Player X won the game, however the play was recorded");
+				System.out.println("Player X won the game, however the play() was recorded");
 				level++;
 			}
 			else if (nextCellValue() == CellValue.O)
 			{
 				board[i] = CellValue.O;
-				System.out.println("Player X won the game, however the play was recorded");
+				System.out.println("Player X won the game, however the play() was recorded");
 				level++;
 			}
 		}
-		else if (gameState == GameState.DRAWN) {System.out.println("Game drawn");}
+		else if (gameState == GameState.DRAW) {System.out.println("Game drawn");}
 	}
 
 
@@ -125,7 +124,7 @@ public class TicTacToeGame
 		CellValue[] leftDiagonal = new CellValue[lines];
 		CellValue[] rightDiagonal = new CellValue[lines];
 		CellValue[] horizontal = new CellValue[columns];
-		
+
 		//Populate vertical[] at index:
 		int indexCount = 0;
 		int row = columnElement[0];
@@ -189,7 +188,7 @@ public class TicTacToeGame
 				if(board[index] == CellValue.EMPTY) {drawn = false;}
 				index++;
 			}
-			if (drawn) {gameState = GameState.DRAWN;}
+			if (drawn) {gameState = GameState.DRAW;}
 		}
 	}
 
@@ -203,7 +202,9 @@ public class TicTacToeGame
 		for (int i = 0; i < (4 * columns - 1); i++) {intermediate += "-";}
 
 		//Determine message:
-		if (level % 2 == 1) {message = "O to play: ";}
+		if (gameState == GameState.XWIN) {message = "Result: XWIN";}
+		else if (gameState == GameState.OWIN) {message = "Result: OWIN";}
+		else if (level % 2 == 1) {message = "O to play: ";}
 		else {message = "X to play: ";}
 
 		//Populate array:
@@ -284,16 +285,5 @@ public class TicTacToeGame
 			}
 		}
 		return rc;
-	}
-
-	//Display diagnostic information:
-	private void cheat()
-	{
-		System.out.println("**********************************************************************");
-		/*EXAMPLE:
-		print("Current board = " + board.toString)());
-		print("Current level = " + level);*/
-		System.out.println("**********************************************************************");
-		return;
 	}
 }
