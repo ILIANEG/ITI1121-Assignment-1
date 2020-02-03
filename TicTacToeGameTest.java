@@ -413,7 +413,7 @@ public class TicTacToeGameTest {
         g.play(6);
         assertEquals(GameState.PLAYING, g.getGameState());
         g.play(8);
-        assertEquals(GameState.DRAWN, g.getGameState());
+        assertEquals(GameState.DRAW, g.getGameState());
     }
 
 
@@ -647,6 +647,128 @@ public class TicTacToeGameTest {
         }
     }
     
+// new tests below
+
+    @Test
+    public void testMoreThanSizeWin() {
+        TicTacToeGame g = new TicTacToeGame(6,6,4);
+        g.play(7);
+        g.play(13);
+        g.play(8);
+        g.play(14);
+        g.play(10);
+        g.play(16);
+        g.play(11);
+        g.play(17);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        g.play(9);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+    }
+
+    @Test
+    public void testNotInARow() {
+        TicTacToeGame g = new TicTacToeGame();
+        g.play(0);
+        g.play(3);
+        g.play(4);
+        g.play(1);
+        g.play(2);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+    }
+
+    @Test
+    public void testKeepPlayingWinnerDoesntChange() {
+        TicTacToeGame g = new TicTacToeGame(3,3);
+        g.play(0);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        g.play(3);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        g.play(1);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        g.play(4);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        g.play(2);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+        assertEquals(5, g.getLevel());
+        assertEquals(CellValue.O, g.nextCellValue());
+        g.play(5);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+        assertEquals(6, g.getLevel());
+        assertEquals(CellValue.X, g.nextCellValue());
+        g.play(6);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+        assertEquals(7, g.getLevel());
+        assertEquals(CellValue.O, g.nextCellValue());
+        g.play(7);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+        assertEquals(8, g.getLevel());
+        assertEquals(CellValue.X, g.nextCellValue());
+        g.play(8);
+        assertEquals(GameState.XWIN, g.getGameState()); 
+        assertEquals(9, g.getLevel());
+        assertEquals(CellValue.O, g.nextCellValue());
+
+    }
+
+    @Test
+    public void testDoesntCrashOutOfRangeTooBig() {
+        TicTacToeGame g = new TicTacToeGame();
+        g.play(0);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+        try{ 
+            g.play(11);
+        } catch(Exception e) {};// trying to continue even with
+                                // the code throws some exception 
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+    }
+
+
+    @Test
+    public void testDoesntCrashOutOfRangeTooSmall() {
+        TicTacToeGame g = new TicTacToeGame(4,4,3);
+        g.play(0);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+        try{ 
+            g.play(-5);
+        } catch(Exception e) {};
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+   }
+
+    @Test
+    public void testInvalidDoesntChangeState() {
+        TicTacToeGame g = new TicTacToeGame(4,4,3);
+        g.play(0);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+       try{ 
+            g.play(0);
+        } catch(Exception e) {};
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.O, g.nextCellValue());
+        assertEquals(1, g.getLevel());
+        g.play(1);
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.X, g.nextCellValue());
+        assertEquals(2, g.getLevel());
+        try{ 
+            g.play(1);
+        } catch(Exception e) {};
+        assertEquals(GameState.PLAYING, g.getGameState()); 
+        assertEquals(CellValue.X, g.nextCellValue());
+        assertEquals(2, g.getLevel());
+
+    }
+
+
     /**
      * Runs the test suite using the textual runner.
      *
